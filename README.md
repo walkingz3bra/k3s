@@ -106,7 +106,7 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 1. Create namespace: `kubectl create namespace filebeat`
 1. Install chart: `helm install filebeat-release helm-charts-7.17.3/filebeat/ --namespace filebeat`
 1. Upgrade chart: `helm upgrade filebeat-release helm-charts-7.17.3/filebeat/ --namespace filebeat`
-1. Change `values.yaml`. Most important changes can be seen below:
+1. Change `values.yaml`.
 
 ## Metricbeat
 
@@ -117,7 +117,6 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 1. `cd helm-charts-7.17.3/metricbeat/ && helm dependency build`
 1. Install chart: `helm install metricbeat-release helm-charts-7.17.3/metricbeat/ --namespace metricbeat`
 1. Upgrade chart: `helm upgrade metricbeat-release helm-charts-7.17.3/metricbeat/ --namespace metricbeat`
-1. Change `values.yaml`. Most important changes can be seen below:
 
 ## Minio
 
@@ -127,14 +126,23 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 1. Create namespace: `kubectl create namespace minio`
 1. Install: `helm install minio-release minio-helm/ --namespace minio`
 
-  ## TODO
+## Assemblyline
+- Todo
 
-  - Add zsh
-  - Add kubectl auto completion
-  - Alias oc = kubectl
-  - README.md gets overwritten when running install-k3s.sh
-  - reenable autoscaler for `metricbeat-release-kube-state-metrics` in values.yaml: set `daemonset.enabled: true`
-  - Add private network IP, using nodeport atm.
-  - assemblyline, fix metricbeat/filebeat/datastore/log-storage-master
-    - find elastic username and password
-  - scale up to three instances
+## TODO
+
+- Add zsh
+- Add kubectl auto completion
+- Alias oc = kubectl
+- README.md gets overwritten when running install-k3s.sh
+- reenable autoscaler for `metricbeat-release-kube-state-metrics` in values.yaml: set `daemonset.enabled: true`
+- Add private network IP, using nodeport atm.
+- assemblyline, fix metricbeat/filebeat/datastore/log-storage-master
+  - find elastic username and password
+- scale up to three instances
+
+  ## Stop or remove k3s
+
+  To stop k3s from running: `/usr/local/bin/k3s-killall.sh`
+
+  To delete k3s completely, run `remove-k3s.sh`
