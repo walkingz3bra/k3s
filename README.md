@@ -99,38 +99,35 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 1. Install chart: `helm upgrade kibana-release helm-charts-7.17.3/kibana/ --namespace kibana`
 1. Change `values.yaml`. Most important changes can be seen below:
 
-## Delete k3s
+## Filebeat
 
-To completely delete k3s, do the following:
+1. Download [https://github.com/elastic/helm-charts/releases/tag/v7.17.3]
+1. Unpack it: `tar -zxvf elastic-7.17.3.tgz`
+1. Create namespace: `kubectl create namespace filebeat`
+1. Install chart: `helm install filebeat-release helm-charts-7.17.3/filebeat/ --namespace filebeat`
+1. Upgrade chart: `helm upgrade filebeat-release helm-charts-7.17.3/filebeat/ --namespace filebeat`
+1. Change `values.yaml`. Most important changes can be seen below:
 
-1. Stop k3s service: `sudo systemctl stop k3s`
-2. Uninstall: `sudo /usr/local/bin/k3s-uninstall.sh`
-3. Remove data dir: `sudo rm -rf /var/lib/rancher/k3s/`
-4. Remove binary and config file:
-  
-  ```bash
-  sudo rm -rf /usr/local/bin/k3s /etc/systemd/system/k3s.service /etc/systemd/system/k3s.service.env
-  ```
-5. Remove ip tables:
+## Metricbeat
 
-  ```bash
-  sudo iptables -F && sudo iptables -X && sudo iptables -t nat -F && sudo iptables -t nat -X && sudo iptables -t mangle -F && sudo iptables -t mangle -X && sudo iptables -P INPUT ACCEPT && sudo iptables -P FORWARD ACCEPT && sudo iptables -P OUTPUT ACCEPT
-  ```
+1. Download [https://github.com/elastic/helm-charts/releases/tag/v7.17.3]
+1. Unpack it: `tar -zxvf elastic-7.17.3.tgz`
+1. Create namespace: `kubectl create namespace metricbeat`
+1. [!] Install dependency: `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+1. `cd helm-charts-7.17.3/metricbeat/ && helm dependency build`
+1. Install chart: `helm install metricbeat-release helm-charts-7.17.3/metricbeat/ --namespace metricbeat`
+1. Upgrade chart: `helm upgrade metricbeat-release helm-charts-7.17.3/metricbeat/ --namespace metricbeat`
+1. Change `values.yaml`. Most important changes can be seen below:
 
-6. Remove systemctl settings:
+## Minio
 
-  ```bash
-  sudo sysctl -w net.bridge.bridge-nf-call-iptables=0 && sudo sysctl -w net.ipv4.conf.all.rp_filter=1 && sudo sysctl -w net.ipv4.conf.default.rp_filter=1
-  ```
-
-7. Remove cgroup settings
-
-  ```
-  sudo sed -i '/cgroup/d' /etc/fstab && sudo rm -rf /sys/fs/cgroup/systemd
-  ```
+1. Download [https://github.com/CybercentreCanada/assemblyline-helm-chart/blob/master/assemblyline/charts/minio-5.0.32.tgz]
+1. Unpack it: `tar -zxvf minio-5.0.32.tgz`
 
   ## TODO
 
   - Add zsh
   - Add kubectl auto completion
   - Alias oc = kubectl
+  - README.md gets overwritten when running install-k3s.sh
+  - reenable autoscaler for `metricbeat-release-kube-state-metrics` in values.yaml: set `daemonset.enabled: true`
