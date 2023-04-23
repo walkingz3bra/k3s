@@ -1,12 +1,10 @@
 #!/bin/bash
 
 echo "Creating manifests using helm template..."
-cd helm-charts-7.17.3/elasticsearch
-helm template -f values.yaml . --namespace elastic > ../../manifest.yaml
+helm template -f ../helm-charts-7.17.3/kibana/values.yaml ../helm-charts-7.17.3/kibana/ --namespace kibana > manifest.yaml
 echo "Generated manifest.yaml from values.yaml file"
 
 echo "Creating and changing to the 'base' directory..."
-cd ../..
 mkdir -p base
 cd base
 
@@ -19,6 +17,7 @@ kind: Kustomization
 metadata:
   name: base
 resources:" > kustomization.yaml
-find . -type f -name '*.yaml' -printf "  - %f\n" >> kustomization.yaml
+find . -type f -name '*.yaml' -not -name 'kustomization.yaml' -printf "  - %f\n" >> kustomization.yaml
+
 
 echo "Done!"

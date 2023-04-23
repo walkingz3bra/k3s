@@ -30,11 +30,10 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 ### Install
 
 1. Download [https://github.com/elastic/helm-charts/releases/tag/v7.17.3]
-2. Unpack it: `tar -zxvf elasticsearch-7.17.3.tgz`
-3. Navigate to chart: `cd elasticsearch`
-4. Create namespace: `kubectl create namespace elastic`
-5. Install chart: `helm install my-release . --namespace elastic`
-6. Change `values.yaml`. Most important changes can be seen below:
+1. Unpack it: `tar -zxvf elastic-7.17.3.tgz`
+1. Create namespace: `kubectl create namespace elasticsearch`
+1. Install chart: `helm upgrade elasticsearch-release helm-charts-7.17.3/elasticsearch/ --namespace elasticsearch`
+1. Change `values.yaml`. Most important changes can be seen below:
 
     ```yaml
     replicas: 1
@@ -90,7 +89,15 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 > Note about ingress: The IP should point to where the k3s cluster is hosted, do a `ifconfig` from the kubernetes host machine.
 > Note about ingress DNS: To resolve `elastic.local`, this must be added to `/etc/hosts/` as `192.168.50.250 elastic.local`. 
 
-7. Run helm chart `helm upgrade --install my-release . --namespace elastic -f values.yaml`
+1. Run helm chart `helm upgrade --install my-release . --namespace elastic -f values.yaml`
+
+## Kibana
+
+1. Download [https://github.com/elastic/helm-charts/releases/tag/v7.17.3]
+1. Unpack it: `tar -zxvf elastic-7.17.3.tgz`
+1. Create namespace: `kubectl create namespace kibana`
+1. Install chart: `helm upgrade kibana-release helm-charts-7.17.3/kibana/ --namespace kibana`
+1. Change `values.yaml`. Most important changes can be seen below:
 
 ## Delete k3s
 

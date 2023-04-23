@@ -1,0 +1,22 @@
+# Source: kibana/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: release-name-kibana
+  labels: 
+    app: kibana
+    release: "release-name"
+    heritage: Helm
+spec:
+  ingressClassName: "nginx"
+  rules:
+  - host: kibana-example.local
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: release-name-kibana
+            port:
+              number: 5601
