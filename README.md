@@ -135,3 +135,6 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
   - README.md gets overwritten when running install-k3s.sh
   - reenable autoscaler for `metricbeat-release-kube-state-metrics` in values.yaml: set `daemonset.enabled: true`
   - Add private network IP, using nodeport atm.
+  - assemblyline, fix metricbeat/filebeat/datastore/log-storage-master
+    - find elastic username and password
+  - scale up to three instances
