@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: base
+namespace: minio
+resources:
+  - persistentvolumeclaim.yaml
+  - rolebinding.yaml
+  - secret.yaml
+  - deployment.yaml
+  - configmap.yaml
+  - role.yaml
+  - service.yaml
+  - serviceaccount.yaml

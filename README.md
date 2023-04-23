@@ -123,6 +123,9 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
 
 1. Download [https://github.com/CybercentreCanada/assemblyline-helm-chart/blob/master/assemblyline/charts/minio-5.0.32.tgz]
 1. Unpack it: `tar -zxvf minio-5.0.32.tgz`
+1. Edit values.yaml
+1. Create namespace: `kubectl create namespace minio`
+1. Install: `helm install minio-release minio-helm/ --namespace minio`
 
   ## TODO
 
@@ -131,3 +134,4 @@ sudo k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-n
   - Alias oc = kubectl
   - README.md gets overwritten when running install-k3s.sh
   - reenable autoscaler for `metricbeat-release-kube-state-metrics` in values.yaml: set `daemonset.enabled: true`
+  - Add private network IP, using nodeport atm.
