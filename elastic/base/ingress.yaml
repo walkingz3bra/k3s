@@ -1,0 +1,24 @@
+# Source: elasticsearch/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: elasticsearch-master
+  labels:
+    app: elasticsearch
+    release: release-name
+    heritage: Helm
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: "nginx"
+  rules:
+  - host: elastic.local
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: elasticsearch-master
+            port:
+              number: 9200
